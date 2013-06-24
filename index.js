@@ -15,6 +15,7 @@ var RiakMock = function(port, host) {
 
     require('./lib/routes/bucket')(this);
     require('./lib/routes/object')(this);
+    require('./lib/routes/query')(this);
 };
 
 RiakMock.prototype.start = function(callback) {
