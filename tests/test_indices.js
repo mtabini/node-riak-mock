@@ -22,7 +22,7 @@ describe('The secondary index facility', function() {
     
     it('should allow setting and retrieving secondary indices', function(done) {
         var payload = { name : 'Marco' , email : 'marcot@tabini.ca' };
-        var bucket = 'people';
+        var bucket = 'people1';
         var key = 'randomkey124';
         
         async.waterfall(
@@ -92,7 +92,7 @@ describe('The secondary index facility', function() {
     
     it('should allow range matching by secondary indices', function(done) {
         var payloads = [ { name : 'Eggs' , price : 300 } , { name : 'bacon' , price : 350 } , { name : 'sausage' , price : 299 } ];
-        var bucket = 'things';
+        var bucket = 'things1';
         
         async.each(
             payloads,
