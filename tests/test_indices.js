@@ -89,6 +89,50 @@ describe('The secondary index facility', function() {
             }
         );
     });
+    
+    it('should allow range matching by secondary indices', function(done) {
+        var payloads = [ { name : 'Eggs' , price : 300 } , { name : 'bacon' , price : 350 } , { name : 'sausage' , price : 299 } ];
+        var bucket = 'things';
+        
+        async.each(
+            payloads,
+            
+            function iterator(element, callback) {
+                client.save(bucket, null, element, { index : { price : element.price } }, callback);
+            },
+            
+            function(err) {
+                expect(err).to.be.null;
+                
+                client.query(bucket, { price : [ 300 , 350 ] }, function(err, list) {
+                    expect(err).to.be.null;
+                    
+                    expect(list).to.be.an('array');
+                    expect(list).to.have.length(2);
+                    
+                    async.map(
+                        list,
+                        
+                        function mapper(element, callback) {
+                            client.get(bucket, element, callback);
+                        },
+                        
+                        function finalCallback(err, result) {
+                            expect(err).to.be.null,
+                            
+                            expect(result).to.be.an('array');
+                            expect(result).to.have.length(2);
+                            
+                            expect(result[0]).to.deep.equal(payloads[0]);
+                            expect(result[1]).to.deep.equal(payloads[1]);
+                            
+                            done();
+                        }
+                    );
+                });
+            }
+        );
+    });
                 
     after(function (done) {
         server.stop(done);
