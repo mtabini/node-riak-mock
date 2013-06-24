@@ -116,6 +116,11 @@ describe('The object manipulation functionality', function() {
                 },
                 
                 function checkMeta(doc, meta, callback) {
+                    expect(doc).to.be.an('object');
+                    expect(doc).to.deep.equal(payload);
+                    
+                    expect(meta).to.be.an('object');
+                    expect(meta._headers['x-riak-meta-test']).to.equal('123');
                     
                     callback();
                 }
