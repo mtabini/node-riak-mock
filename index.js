@@ -7,8 +7,10 @@ var RiakMock = function(port, host) {
     this.server = restify.createServer({
         name: 'Riak',
         version: '1.4.0',
-        acceptable: [ '*/*' ]
+        acceptable: [ '*/*' ],
     });
+    
+    this.server.formatters['multipart/mixed'] =require('./lib/util/multipart');
 
     this.server.use(restify.conditionalRequest());
     this.server.use(restify.queryParser({ mapParams: false }));
