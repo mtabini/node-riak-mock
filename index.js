@@ -7,6 +7,7 @@ var RiakMock = function(port, host) {
     this.server = restify.createServer({
         name: 'Riak',
         version: '1.4.0',
+        acceptable: [ '*/*' ]
     });
 
     this.server.use(restify.conditionalRequest());
@@ -16,6 +17,7 @@ var RiakMock = function(port, host) {
     require('./lib/routes/bucket')(this);
     require('./lib/routes/object')(this);
     require('./lib/routes/query')(this);
+    require('./lib/routes/link')(this);
 };
 
 RiakMock.prototype.start = function(callback) {
