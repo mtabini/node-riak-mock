@@ -1,8 +1,13 @@
 {
   "name": "mock-riak",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "author": "Marco Tabini <marcot@tabini.ca>",
   "description": "A mock library that simulates a running Riak cluster (without actually having one)",
+  "homepage": "https://github.com/mtabini/node-riak-mock",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mtabini/node-riak-mock.git"
+  },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --harmony -R dot -u tdd $(find tests -name 'test_*.js')"
   },

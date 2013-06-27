@@ -1,13 +1,14 @@
 var restify = require('restify');
 var crypto = require('crypto');
 
-var RiakMock = function(port, host) {
+var RiakMock = function(port, host, log) {
     this.host = host;
     this.port = port;
     this.server = restify.createServer({
         name: 'Riak',
         version: '1.4.0',
         acceptable: [ '*/*' ],
+        log: log
     });
     
     this.server.formatters['multipart/mixed'] =require('./lib/util/multipart');
