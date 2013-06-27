@@ -20,6 +20,7 @@ var RiakMock = function(port, host) {
     require('./lib/routes/object')(this);
     require('./lib/routes/query')(this);
     require('./lib/routes/link')(this);
+    require('./lib/routes/mapreduce')(this);
 };
 
 RiakMock.prototype.start = function(callback) {
