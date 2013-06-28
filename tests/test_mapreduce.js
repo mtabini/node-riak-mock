@@ -148,6 +148,38 @@ describe('The map/reduce functionality', function() {
             }
         );        
     });
+    
+    it('should support 2i operations in input', function(done) {
+        var payloads = [ { name : 'Marco' , email : 'marcot@tabini.ca' } , { name : 'Daniel' , email : 'daniel@example.org' } , { name : 'Andrea' , email : 'andrea@example.org' } ];
+        var bucket = 'things22';
+
+        async.each(
+            payloads,
+    
+            function iterator(element, callback) {
+                client.save(bucket, null, element, { index : { email_index : element.email } }, callback);
+            },
+    
+            function(err) {
+                expect(err).to.be.null;
+        
+                client.mapreduce
+                .add({ bucket : bucket , index : 'email_index_bin' , key : 'daniel@example.org' })
+                .map('Riak.mapValuesJson')
+                .run(function(err, result) {
+                    expect(err).to.be.null;
+                    
+                    expect(result).to.be.an('array');
+                    expect(result).to.have.length(1);
+                    
+                    expect(result[0]).to.be.an('object');
+                    expect(result[0]).to.deep.equal(payloads[1]);
+
+                    done();
+                });
+            }
+        );
+    });
               
     after(function (done) {
         server.stop(done);

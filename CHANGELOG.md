@@ -1,3 +1,7 @@
+## version 0.8.7
+
+- Added support for 2i operations in map/reduce inputs
+
 ## version 0.8.6
 
 - Fixed a bug that was causing JSON data not to be interpreted properly
