@@ -1,3 +1,7 @@
+## version 0.8.6
+
+- Fixed a bug that was causing JSON data not to be interpreted properly
+
 ## version 0.8.5
 
 - Added support for the [built-in map/reduce functions](https://github.com/basho/riak_kv/blob/master/priv/mapred_builtins.js).

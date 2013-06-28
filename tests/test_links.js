@@ -38,8 +38,6 @@ describe('The link manipulation functionality', function() {
                 },
             
                 function checkMeta(doc, meta, callback) {
-                    doc = JSON.parse(doc);
-                    
                     expect(doc).to.be.an('object');
                     expect(doc).to.deep.equal(payload);
                 

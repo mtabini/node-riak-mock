@@ -37,8 +37,6 @@ describe('The secondary index facility', function() {
                 },
                 
                 function checkMeta(doc, meta, callback) {
-                    doc = JSON.parse(doc);
-                    
                     expect(doc).to.be.an('object');
                     expect(doc).to.deep.equal(payload);
                     
@@ -82,8 +80,6 @@ describe('The secondary index facility', function() {
                     client.get(bucket, list[0], function(err, doc, meta) {
                         expect(err).to.be.null;
                         
-                        doc = JSON.parse(doc);
-                    
                         expect(doc).to.be.an('object');
                         expect(doc).to.deep.equal(payloads[1]);
                     
@@ -126,8 +122,6 @@ describe('The secondary index facility', function() {
                             
                             expect(result).to.be.an('array');
                             expect(result).to.have.length(2);
-                            
-                            result = result.map(JSON.parse);
                             
                             expect(result[0]).to.deep.equal(payloads[0]);
                             expect(result[1]).to.deep.equal(payloads[1]);
