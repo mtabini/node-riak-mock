@@ -57,7 +57,8 @@ describe('The map/reduce functionality', function() {
                     .add([[bucket, 'marco']])
                     .link({})
                     .map(function(v, args, arg) {
-                        var key = v.values[0].data.gender + arg.b;
+                        var data = JSON.parse(v.values[0].data);
+                        var key = data.gender + arg.b;
                         var result = {};
                 
                         result[key] = 1;
@@ -91,6 +92,56 @@ describe('The map/reduce functionality', function() {
                         
                         expect(result).to.be.an('array');
                         expect(result).to.deep.equal(expectedResult);
+                        
+                        done();
+                    });
+            }
+        );        
+    });
+    
+    it('should support built-in named functions', function(done) {
+        var payloads = [ 
+            {
+                data : { 
+                    name : 'Marco' , 
+                    gender : 'male'
+                } , 
+                key : 'marco' , 
+                links : [ 
+                    { 
+                        bucket : 'users' , 
+                        key : 'daniel' ,
+                        tag : 'friend'
+                    },
+                    {
+                        bucket : 'users',
+                        key: 'andrea',
+                        tag : 'child'
+                    }]
+            },
+            { data : { name : 'Daniel' , email : 'daniel@example.org' , gender : 'male' } , links : [ { bucket : 'users' , key : 'andrea' , tag : 'sibling' } ] , key : 'daniel' }, 
+            { data : { name : 'Andrea' , email : 'andrea@example.org' , gender : 'female' } , key : 'andrea' } ];
+    
+        var bucket = 'users';
+
+        async.each(
+            payloads,
+    
+            function iterator(element, callback) {
+                client.save(bucket, element.key, element.data, element.links ? { links : element.links } : null, callback);
+            },
+    
+            function(err) {
+                client.mapreduce
+                    .add([[bucket, 'marco']])
+                    .map('Riak.mapValuesJson')
+                    .run(function(err, result) {
+                        expect(err).to.be.null;
+                        
+                        expect(result).to.be.an('array');
+                        expect(result).to.have.length(1);
+                        
+                        expect(result).to.deep.equal([ { name: 'Marco', gender: 'male' } ]);
                         
                         done();
                     });

@@ -33,6 +33,8 @@ describe('The object manipulation functionality', function() {
         var payload = { name : 'Marco' , email : 'marcot@tabini.ca' };
         
         client.save('people', null, payload, { returnbody : true }, function(err, doc) {
+            doc = JSON.parse(doc);
+            
             expect(err).to.be.null;
             expect(doc).to.deep.equal(payload);
             
@@ -45,6 +47,8 @@ describe('The object manipulation functionality', function() {
         var key = 'randomkey123';
         
         client.save('people', key, payload, { returnbody : true }, function(err, doc) {
+            doc = JSON.parse(doc);
+            
             expect(err).to.be.null;
             expect(doc).to.deep.equal(payload);
             
@@ -58,10 +62,14 @@ describe('The object manipulation functionality', function() {
         var key = 'randomkey124';
         
         client.save(bucket, key, payload, { returnbody : true }, function(err, doc) {
+            doc = JSON.parse(doc);
+            
             expect(err).to.be.null;
             expect(doc).to.deep.equal(payload);
             
             client.get(bucket, key, function(err, document, meta) {
+                document = JSON.parse(document);
+                
                 expect(err).to.be.null;
                 expect(document).to.deep.equal(payload);
                 
@@ -76,6 +84,8 @@ describe('The object manipulation functionality', function() {
         var key = 'randomkey125';
         
         client.save(bucket, key, payload, { returnbody : true }, function(err, doc) {
+            doc = JSON.parse(doc);
+            
             expect(err).to.be.null;
             expect(doc).to.deep.equal(payload);
             
@@ -116,6 +126,8 @@ describe('The object manipulation functionality', function() {
                 },
                 
                 function checkMeta(doc, meta, callback) {
+                    doc = JSON.parse(doc);
+                
                     expect(doc).to.be.an('object');
                     expect(doc).to.deep.equal(payload);
                     
