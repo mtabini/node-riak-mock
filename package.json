@@ -1,6 +1,6 @@
 {
   "name": "mock-riak",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "author": "Marco Tabini <marcot@tabini.ca>",
   "description": "A mock library that simulates a running Riak cluster (without actually having one)",
   "homepage": "https://github.com/mtabini/node-riak-mock",

@@ -1,3 +1,8 @@
+## version 0.8.8
+
+- Added support for using entire buckets as the input for a map/reduce operation
+- Improved error handling
+
 ## version 0.8.7
 
 - Added support for 2i operations in map/reduce inputs

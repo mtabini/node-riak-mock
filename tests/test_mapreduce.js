@@ -181,6 +181,42 @@ describe('The map/reduce functionality', function() {
         );
     });
               
+    it('should support entire buckets in input', function(done) {
+        var payloads = [ { name : 'Marco' , email : 'marcot@tabini.ca' } , { name : 'Daniel' , email : 'daniel@example.org' } , { name : 'Andrea' , email : 'andrea@example.org' } ];
+        var bucket = 'things23';
+
+        async.each(
+            payloads,
+    
+            function iterator(element, callback) {
+                client.save(bucket, null, element, { index : { email_index : element.email } }, callback);
+            },
+    
+            function(err) {
+                expect(err).to.be.null;
+                
+                client.mapreduce
+                .add({ bucket : bucket })
+                .map('Riak.mapValuesJson')
+                .run(function(err, result) {
+        
+                    expect(err).to.be.null;
+                    
+                    expect(result).to.be.an('array');
+                    
+                    expect(result).to.have.length(3);
+
+                    result.forEach(function(value, index) {
+                        expect(value).to.be.an('object');
+                        expect(value).to.deep.equal(payloads[index]);
+                    });
+
+                    done();
+                });
+            }
+        );
+    });
+              
     after(function (done) {
         server.stop(done);
     });

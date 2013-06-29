@@ -12,7 +12,9 @@ var RiakMock = function(port, host, log) {
     });
     
     this.server.formatters['multipart/mixed'] =require('./lib/util/multipart');
+    this.server.formatters['application/json'] =require('./lib/util/json');
 
+    this.server.use(restify.acceptParser(this.server.acceptable));
     this.server.use(restify.conditionalRequest());
     this.server.use(restify.queryParser({ mapParams: false }));
     this.server.use(restify.bodyParser({ mapParams: false }));
