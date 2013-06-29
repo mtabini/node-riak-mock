@@ -1,3 +1,7 @@
+## version 0.8.9
+
+- Minor bugfixes
+
 ## version 0.8.8
 
 - Added support for using entire buckets as the input for a map/reduce operation
